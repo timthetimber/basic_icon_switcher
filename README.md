@@ -217,3 +217,81 @@ Note: For IOS there is a real option to reset the App's icon for Android, there 
 ## Note
 
 Please be aware that the Android solution is as stated before not the best solution but however it works, for me it takes a bit until Android updates the App on the Homescreen so pressing on an Icon and getting the message Unknown App or something like this can happen! It takes a few moments and than the App is again back with the new Icon and can be started without any issues.
+
+## Modern API Usage (Recommended)
+
+The package now provides a modern, type-safe API with better error handling:
+
+### Basic Usage
+
+```dart
+import 'package:mobile_icon_switcher/mobile_icon_switcher.dart';
+
+// Check if icon switching is supported
+if (MobileIconSwitcher.isSupported) {
+  try {
+    // Set icon by name
+    await MobileIconSwitcher.setIcon(iconName: 'premium');
+    
+    // Or use IconConfiguration for type safety
+    const premiumIcon = AppIcon.custom(
+      identifier: 'premium',
+      displayName: 'Premium Theme',
+      activityAlias: 'PremiumActivity', // Android only
+    );
+    await MobileIconSwitcher.setIcon(iconConfig: premiumIcon);
+    
+    // Get current icon
+    final currentIcon = await MobileIconSwitcher.getCurrentIcon();
+    print('Current icon: $currentIcon');
+    
+    // Get all available icons
+    final availableIcons = await MobileIconSwitcher.getAvailableIcons();
+    print('Available icons: $availableIcons');
+    
+    // Reset to default icon
+    await MobileIconSwitcher.resetToDefaultIcon();
+    
+  } on IconNotSupportedException catch (e) {
+    print('Icon not supported: ${e.message}');
+  } on PlatformNotSupportedException catch (e) {
+    print('Platform not supported: ${e.message}');
+  } on IconSwitchFailedException catch (e) {
+    print('Icon switch failed: ${e.message}');
+  }
+}
+```
+
+### Error Handling
+
+The modern API provides specific exception types:
+
+- `IconNotSupportedException`: When the requested icon is not available
+- `PlatformNotSupportedException`: When the platform doesn't support icon switching
+- `IconSwitchFailedException`: When the icon switching operation fails
+
+### Debug Mode
+
+Enable debug logging for troubleshooting:
+
+```dart
+// Enable debug logging
+MobileIconSwitcher.enableDebugMode();
+
+// Your icon switching code here
+
+// Disable debug logging
+MobileIconSwitcher.disableDebugMode();
+```
+
+### Legacy API (Deprecated)
+
+The old API methods are still available but deprecated:
+
+```dart
+// Deprecated - use setIcon instead
+bool success = await MobileIconSwitcher.changeIcon('iconName', 'activityAlias');
+
+// Deprecated - use resetToDefaultIcon instead  
+bool success = await MobileIconSwitcher.resetIcon();
+```
