@@ -44,7 +44,7 @@ class MobileIconSwitcher {
   
   static void _log(String message) {
     if (_debugMode) {
-      print('[MobileIconSwitcher] $message');
+      debugPrint('[MobileIconSwitcher] $message');
     }
   }
 
