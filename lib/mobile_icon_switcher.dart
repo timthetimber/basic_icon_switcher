@@ -251,7 +251,7 @@ class MobileIconSwitcher {
   /// `true
   @Deprecated('Use setIcon with proper error handling instead')
   static Future<bool> setDefaultComponent(String defaultComponent) async {
-    if (!_isPlatformSupported || (_platformOverride == null && !Platform.isAndroid)) {
+    if (!Platform.isAndroid) {
       _log('setDefaultComponent called on non-Android platform');
       return true;
     }
