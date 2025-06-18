@@ -106,12 +106,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(height: 8),
             ElevatedButton(
-              onPressed: () => _switchAppIconModern("first"),
-              child: const Text("Switch to First Icon"),
+              onPressed: () => _switchAppIconModern("alternative"),
+              child: const Text("Switch to Alternative Icon"),
             ),
             ElevatedButton(
-              onPressed: () => _switchAppIconModern("second"),
-              child: const Text("Switch to Second Icon"),
+              onPressed: () => _switchAppIconModern("premium"),
+              child: const Text("Switch to Premium Icon"),
             ),
             ElevatedButton(
               onPressed: _resetAppIconModern,
