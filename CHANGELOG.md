@@ -1,3 +1,7 @@
+## 1.0.1
+
+- Added Swift Package Manager (SPM) support for iOS and macOS.
+
 ## 1.0.0
 
 **This is a new package replacing `mobile_icon_switcher`.** Published as `basic_icon_switcher`.
