@@ -3,26 +3,12 @@ name: Publish to pub.dev
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+*' # tag pattern on pub.dev: 'v'
+      - 'basic-v[0-9]+.[0-9]+.[0-9]+*'
 
-# Publish using custom workflow
 jobs:
   publish:
     permissions:
       id-token: write # Required for authentication using OIDC
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Flutter SDK
-        uses: flutter-actions/setup-flutter@v2.2
-        with:
-          version: 3.10.5
-          channel: 'stable' # you can choose the Flutter channel you prefer: stable, beta, dev or master
-      - uses: dart-lang/setup-dart@v1
-      - name: Install dependencies
-        run: flutter pub get
-      # Here you can insert custom steps you need
-      # - run: dart tool/generate-code.dart
-      - name: Publish
-        run: flutter pub publish --force
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    # with:
+    #   working-directory: path/to/package/within/repository
