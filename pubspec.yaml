@@ -1,53 +1,51 @@
-name: mobile_icon_switcher
-description: A Flutter package which allows you to change the apps icon within the app
-version: 1.1.1
-repository: https://github.com/timthetimber/mobile_icon_switcher
+name: icon_switcher
+description: A Flutter plugin to dynamically change your app icon at runtime. Supports iOS, Android, Web (favicon), macOS, Windows, and Linux.
+version: 1.0.0
+repository: https://github.com/timthetimber/icon_switcher
+issue_tracker: https://github.com/timthetimber/icon_switcher/issues
+
 environment:
-  sdk: '>=3.0.5 <4.0.0'
-  flutter: '>=1.17.0'
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"
 
 platforms:
   android:
   ios:
+  web:
+  macos:
+  windows:
+  linux:
 
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  web: ^1.1.0
+  plugin_platform_interface: ^2.1.0
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
+  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-# The following section is specific to Flutter packages.
 flutter:
   plugin:
     platforms:
       ios:
-        pluginClass: SwiftMobileIconSwitcherPlugin
+        pluginClass: SwiftIconSwitcherPlugin
       android:
-        package: de.timthetimber.mobileiconswitcher
-        pluginClass: MobileIconSwitcherPlugin
-  # To add assets to your package, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-  #
-  # For details regarding assets in packages, see
-  # https://flutter.dev/assets-and-images/#from-packages
-  #
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-  # To add custom fonts to your package, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
+        package: de.timthetimber.iconswitcher
+        pluginClass: IconSwitcherPlugin
+      web:
+        pluginClass: IconSwitcherWeb
+        fileName: icon_switcher_web.dart
+      macos:
+        pluginClass: IconSwitcherPlugin
+      windows:
+        pluginClass: IconSwitcherPluginCApi
+      linux:
+        pluginClass: IconSwitcherPlugin
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

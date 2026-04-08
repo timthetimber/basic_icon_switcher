@@ -1,201 +1,345 @@
-# Mobile Icon Switcher
+# Icon Switcher
 
-[![pub package](https://img.shields.io/pub/v/mobile_icon_switcher.svg)](https://pub.dev/packages/mobile_icon_switcher)
-[![GitHub](https://img.shields.io/github/license/timthetimber/mobile_icon_switcher)](https://github.com/timthetimber/mobile_icon_switcher/blob/main/LICENSE)
-[![GitHub Repo stars](https://img.shields.io/github/stars/timthetimber/mobile_icon_switcher?style=social)](https://github.com/timthetimber/mobile_icon_switcher/stargazers)
+[![pub package](https://img.shields.io/pub/v/icon_switcher.svg)](https://pub.dev/packages/icon_switcher)
+[![GitHub](https://img.shields.io/github/license/timthetimber/icon_switcher)](https://github.com/timthetimber/icon_switcher/blob/main/LICENSE)
 
-Mobile Icon Switcher is a plugin that makes changing your app's icon within the app easy. See a short demo below:
+A Flutter plugin to dynamically change your app icon at runtime. Supports **iOS**, **Android**, **Web**, **macOS**, **Windows**, and **Linux**.
 
-## Demo
+> **Migrating from `mobile_icon_switcher`?** See the [Migration Guide](#migration-from-mobile_icon_switcher) at the bottom.
 
-<img src="https://github.com/timthetimber/mobile_icon_switcher/raw/main/.github/images/demo.gif"  width="400"/>
+## Platform Support
 
-## How to use
+| Platform    | What changes          | Persistence                   | Setup required                     |
+| ----------- | --------------------- | ----------------------------- | ---------------------------------- |
+| **iOS**     | Launcher icon         | Permanent                     | Info.plist + icon files            |
+| **Android** | Launcher icon         | Permanent                     | AndroidManifest + activity-aliases |
+| **Web**     | Browser tab favicon   | Session only (tab lifetime)   | Favicon files in `web/`            |
+| **macOS**   | Dock icon             | Temporary (resets on restart) | Bundle icon assets                 |
+| **Windows** | Window + taskbar icon | Temporary (resets on restart) | Bundle icon assets                 |
+| **Linux**   | Window icon           | Temporary (resets on restart) | Bundle icon assets                 |
+
+## Installation
+
+```yaml
+dependencies:
+  icon_switcher: ^1.0.0
+```
+
+## Quick Start
+
+```dart
+import 'package:icon_switcher/icon_switcher.dart';
+
+// Switch to an alternate icon
+await IconSwitcher.changeIcon(
+  iconName: 'dark',
+  androidActivityAlias: 'com.example.myapp.Dark', // Android only
+  webFaviconUrl: 'icons/dark.png',                // Web only
+  desktopIconAsset: 'assets/icons/dark.png',       // macOS/Windows/Linux
+);
+
+// Reset to default
+await IconSwitcher.resetIcon();
+
+// Check current icon (iOS/Android)
+final current = await IconSwitcher.getCurrentIcon(); // null = default
+
+// Check if supported
+final supported = await IconSwitcher.isSupported;
+```
+
+## Platform Setup
 
 ### iOS
 
 <details>
-  <summary>Click to expand</summary>
+<summary>Click to expand</summary>
 
 #### Prerequisites
 
-- **Important:** This package doesn't handle the initial App Icon. You must provide/set this yourself.
-- iOS 10.3 and above.
-- Images in @1x, @2x, and @3x sizes like standard iOS images. A tool for this can be found [here](https://www.appicon.co/#image-sets) (It can also be used for Android).
+- iOS 12.0+
+- Icon images in @1x, @2x, and @3x sizes. Generate them at [appicon.co](https://www.appicon.co/#image-sets).
 
-#### Preparation
+#### Steps
 
-1. Open `Runner.xcworkspace` from your project in XCode.
-2. Create a folder named `App Icons` in the Runner folder.
-3. In this folder, place your app icons as follows:
-   - Name@1x.png
-   - Name@2x.png
-   - Name@3x.png
+1. Open `Runner.xcworkspace` in Xcode.
+2. Create a folder named `App Icons` in the Runner group.
+3. Add your icon files:
+   - `IconName.png` (1x)
+   - `IconName@2x.png` (2x)
+   - `IconName@3x.png` (3x)
+4. Edit `Info.plist` to declare alternate icons:
 
-Then, modify the `info.plist` as shown:
-
-```plist
-...
-<plist version="1.0">
-<dict>
+```xml
 <key>CFBundleIcons</key>
+<dict>
+    <key>CFBundleAlternateIcons</key>
     <dict>
-        <key>CFBundleAlternateIcons</key>
+        <key>dark</key>
         <dict>
-            <key>NAME</key>
-            <dict>
-                <key>UIPrerenderedIcon</key>
-                <string>NO</string>
-                <key>CFBundleIconFiles</key>
-                <array>
-                    <string>NAME</string>
-                </array>
-            </dict>
-            <key>NAME2</key>
-            <dict>
-                <key>UIPrerenderedIcon</key>
-                <string>NO</string>
-                <key>CFBundleIconFiles</key>
-                <array>
-                    <string>NAME2</string>
-                </array>
-            </dict>
+            <key>UIPrerenderedIcon</key>
+            <false/>
+            <key>CFBundleIconFiles</key>
+            <array>
+                <string>dark</string>
+            </array>
+        </dict>
+        <key>light</key>
+        <dict>
+            <key>UIPrerenderedIcon</key>
+            <false/>
+            <key>CFBundleIconFiles</key>
+            <array>
+                <string>light</string>
+            </array>
         </dict>
     </dict>
-...
+</dict>
 ```
 
-Replace NAME and NAME2 with the names of your app icon files.
+5. Use in Dart:
 
-After that, you're ready to go!
+```dart
+await IconSwitcher.changeIcon(iconName: 'dark');
+```
 
 </details>
 
 ### Android
 
 <details>
-  <summary>Click to expand</summary>
+<summary>Click to expand</summary>
 
-### Prerequisites
+#### Prerequisites
 
-- IMPORTANT: Android is not providing a solution for changing the App Icon by default as IOS does, so this way may not be the cleanest and best, but it works.
-- You need to know your `applicationId` by default it is: `com.example.example`
-- Images in mipmap format just like the default android icon. Find a tool for this: [here](https://www.appicon.co/#image-sets) (Can also be used for the IOS ones)
+- Android minSdk 21+
+- Icon images in mipmap format. Generate them at [appicon.co](https://www.appicon.co/#image-sets).
+- Your `applicationId` (e.g., `com.example.myapp`)
 
-### Preperation
+#### Steps
 
-- Put your images in the destination folders: `your_project/android/app/src/main/res/mipmap-anydpi-v26`, `your_project/android/app/src/main/res/mipmap-hdpi`, `your_project/android/app/src/main/res/mipmap-mdpi`, `your_project/android/app/src/main/res/mipmap-xhdpi`, `your_project/android/app/src/main/res/mipmap-xxhdpi` and `your_project/android/app/src/main/res/mipmap-xxxhdpi`
+1. Place icon images in the mipmap folders under `android/app/src/main/res/` (`mipmap-hdpi`, `mipmap-mdpi`, `mipmap-xhdpi`, `mipmap-xxhdpi`, `mipmap-xxxhdpi`).
 
-Go to `your_project/android/app/src/main/AndroidManifest.xml` and here you
-need to add for each icon an entry like this:
-
-```xml
-...
-        </activity>
-        <!--START HERE: -->
-        <activity-alias
-            android:name=".NameOfYourActivity"
-            android:targetActivity=".MainActivity"
-            android:icon="@mipmap/NameOfTheMipMapImage"
-            android:enabled="false">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-        ...
-```
-
-The `NameOfTheMipMapImage` must just be the name of the image you put in the mipmap folders (Please feel free to checkout my example).
-
-The `NameOfYourActivity` is really important! Because now we need to create a Activity Class in our Android Project, for this I just edited the `MainActivity.kt` file located under: `your_project/android/app/src/main/kotlin/com/example/example/MainActivity.kt` In this file you need to create new activity classes with the name you specified in `NameOfYourActivity`.
-
-#### Example:
-
-My `AndroidManifest.xml`:
+2. Add activity-aliases to `AndroidManifest.xml` (after the `</activity>` tag):
 
 ```xml
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <application
-        android:label="example"
-        android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:launchMode="singleTop"
-            android:theme="@style/LaunchTheme"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize">
-            <!-- Specifies an Android theme to apply to this Activity as soon as
-                 the Android process has started. This theme is visible to the user
-                 while the Flutter UI initializes. After that, this theme continues
-                 to determine the Window background behind the Flutter UI. -->
-            <meta-data
-              android:name="io.flutter.embedding.android.NormalTheme"
-              android:resource="@style/NormalTheme"
-              />
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <!--IMPORTANT START HERE: -->
-        <activity-alias
-            android:name=".First"
-            android:targetActivity=".MainActivity"
-            android:icon="@mipmap/first"
-            android:enabled="false">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-        <!-- Don't delete the meta-data below.
-             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
-        <meta-data
-            android:name="flutterEmbedding"
-            android:value="2" />
-    </application>
-</manifest>
+<activity-alias
+    android:name=".Dark"
+    android:targetActivity=".MainActivity"
+    android:icon="@mipmap/dark"
+    android:enabled="false">
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+</activity-alias>
 ```
 
-As you can see I need to create a class called `First` just like this:
+3. Create a Kotlin/Java class for each alias in your `MainActivity.kt`:
 
 ```kotlin
-package com.example.example
+package com.example.myapp
 
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity() {
-}
-
-//NEW:
-class First: FlutterActivity() {
-}
+class MainActivity: FlutterActivity()
+class Dark: FlutterActivity()
 ```
 
-## Flutter/Dart part
+4. Use in Dart:
 
-Sadly we also have one different thing to setup here for Android:
-
-```Dart
-MobileIconSwitcher.setDefaultComponent("com.example.example.MainActivity");
+```dart
+await IconSwitcher.changeIcon(
+  iconName: 'dark',
+  androidActivityAlias: 'com.example.myapp.Dark',
+);
 ```
 
-This we need to call when our App starts, please also feel free to look into my example App how I did this. Important here, the applicationId and the MainActivity name must be correct, please double check this in case of errors.
+> **Note**: Unlike the previous version (`mobile_icon_switcher`), you no longer need to call `setDefaultComponent()`. The plugin auto-detects the default launcher activity.
 
 </details>
 
-## Using the mobile_icon_switcher in a Flutter App
+### Web
 
-### Switching the Apps Icon
+<details>
+<summary>Click to expand</summary>
 
-To now switch the icon after you are done with the IOS and/or Android Setup above you can just call this method:
+#### Steps
+
+1. Place your alternate favicon files in the `web/` directory (or a subfolder like `web/icons/`):
+   - `web/icons/dark.png`
+   - `web/icons/light.png`
+
+2. Make sure your `web/index.html` has a favicon link:
+
+```html
+<link rel="icon" type="image/png" href="favicon.png" />
+```
+
+3. Use in Dart:
 
 ```dart
-await MobileIconSwitcher.changeIcon('first', 'com.example.example.First');
+await IconSwitcher.changeIcon(
+  iconName: 'dark',
+  webFaviconUrl: 'icons/dark.png',
+);
+```
+
+> **Note**: Favicon changes are session-only — they reset when the tab is closed.
+
+</details>
+
+### macOS
+
+<details>
+<summary>Click to expand</summary>
+
+#### Steps
+
+1. Add your icon PNG files as Flutter assets in `pubspec.yaml`:
+
+```yaml
+flutter:
+  assets:
+    - assets/icons/
+```
+
+2. Place icon files in `assets/icons/` (e.g., `dark.png`, `light.png`).
+
+3. Use in Dart:
+
+```dart
+await IconSwitcher.changeIcon(
+  iconName: 'dark',
+  desktopIconAsset: 'assets/icons/dark.png',
+);
+```
+
+> **Note**: The dock icon change is temporary — it resets when the app restarts. To persist your choice, store the selected icon name (e.g., in `SharedPreferences`) and call `changeIcon()` again on app startup.
+
+</details>
+
+### Windows
+
+<details>
+<summary>Click to expand</summary>
+
+#### Steps
+
+Same as macOS — add PNG assets and pass `desktopIconAsset`:
+
+```dart
+await IconSwitcher.changeIcon(
+  iconName: 'dark',
+  desktopIconAsset: 'assets/icons/dark.png',
+);
+```
+
+> **Note**: Changes the window titlebar and taskbar icon. Resets on restart.
+
+</details>
+
+### Linux
+
+<details>
+<summary>Click to expand</summary>
+
+#### Steps
+
+Same as macOS/Windows — add PNG assets and pass `desktopIconAsset`:
+
+```dart
+await IconSwitcher.changeIcon(
+  iconName: 'dark',
+  desktopIconAsset: 'assets/icons/dark.png',
+);
+```
+
+> **Note**: Changes the window decoration icon. Resets on restart.
+
+</details>
+
+## API Reference
+
+### `IconSwitcher.changeIcon()`
+
+```dart
+static Future<bool> changeIcon({
+  required String iconName,
+  String? androidActivityAlias,
+  String? webFaviconUrl,
+  String? desktopIconAsset,
+})
+```
+
+| Parameter              | Required on           | Description                               |
+| ---------------------- | --------------------- | ----------------------------------------- |
+| `iconName`             | iOS, Android          | Icon name matching platform config        |
+| `androidActivityAlias` | Android               | Fully qualified activity-alias class name |
+| `webFaviconUrl`        | Web                   | URL/path to favicon file                  |
+| `desktopIconAsset`     | macOS, Windows, Linux | Flutter asset path to PNG                 |
+
+### `IconSwitcher.resetIcon()`
+
+Resets to the default icon on all platforms.
+
+### `IconSwitcher.getCurrentIcon()`
+
+Returns the current icon name, or `null` if the default is active. Currently supported on iOS and Android only.
+
+### `IconSwitcher.isSupported`
+
+Returns `true` if icon switching is supported on the current platform.
+
+## Platform Limitations
+
+| Platform    | Limitation                                                                        |
+| ----------- | --------------------------------------------------------------------------------- |
+| **iOS**     | Shows a system alert when the icon changes (iOS limitation, cannot be suppressed) |
+| **Android** | May briefly kill the app on some devices when switching icons                     |
+| **Web**     | Favicon change is session-only; resets on page reload or tab close                |
+| **macOS**   | Dock icon resets when the app restarts                                            |
+| **Windows** | Window icon resets when the app restarts                                          |
+| **Linux**   | Window icon resets when the app restarts; behavior varies by window manager       |
+
+## Migration from `mobile_icon_switcher`
+
+### Breaking Changes
+
+1. **Package name**: `mobile_icon_switcher` → `icon_switcher`
+2. **Class name**: `MobileIconSwitcher` → `IconSwitcher`
+3. **`setDefaultComponent()` removed**: No longer needed — the Android plugin auto-detects the default component.
+4. **`changeIcon()` signature changed**: Now uses named parameters.
+5. **`platformVersion` removed**: Use Flutter's built-in platform detection instead.
+
+### Before (mobile_icon_switcher)
+
+```dart
+import 'package:mobile_icon_switcher/mobile_icon_switcher.dart';
+
+// Required on Android
+MobileIconSwitcher.setDefaultComponent("com.example.app.MainActivity");
+
+// Change icon
+await MobileIconSwitcher.changeIcon('dark', 'com.example.app.Dark');
+
+// Reset
+await MobileIconSwitcher.resetIcon();
+```
+
+### After (icon_switcher)
+
+```dart
+import 'package:icon_switcher/icon_switcher.dart';
+
+// Change icon (no setDefaultComponent needed!)
+await IconSwitcher.changeIcon(
+  iconName: 'dark',
+  androidActivityAlias: 'com.example.app.Dark',
+);
+
+// Reset
+await IconSwitcher.resetIcon();
 ```
 
 The first argument here is the IconName, this part is necessary for IOS mostly, the second argument is the Activity with the ApplicationId of Android.
