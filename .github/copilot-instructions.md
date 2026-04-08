@@ -2,24 +2,24 @@
 
 ## Overview
 
-Flutter plugin (`icon_switcher`) enabling runtime app icon switching on iOS, Android, Web, macOS, Windows, and Linux. Published on [pub.dev](https://pub.dev/packages/icon_switcher). Successor to `mobile_icon_switcher`.
+Flutter plugin (`basic_icon_switcher`) enabling runtime app icon switching on iOS, Android, Web, macOS, Windows, and Linux. Published on [pub.dev](https://pub.dev/packages/basic_icon_switcher). Successor to `mobile_icon_switcher`.
 
 ## Architecture
 
-Uses method channel (name: `icon_switcher`) for native platforms, and `package:web` for web.
+Uses method channel (name: `basic_icon_switcher`) for native platforms, and `package:web` for web.
 
 | Layer           | File                                                                         | Language |
 | --------------- | ---------------------------------------------------------------------------- | -------- |
-| Dart API        | `lib/icon_switcher.dart`                                                     | Dart     |
-| Platform iface  | `lib/src/icon_switcher_platform_interface.dart`                              | Dart     |
-| Method channel  | `lib/src/icon_switcher_method_channel.dart`                                  | Dart     |
-| Web impl        | `lib/src/icon_switcher_web.dart`                                             | Dart     |
-| Web entry point | `lib/icon_switcher_web.dart`                                                 | Dart     |
+| Dart API        | `lib/basic_icon_switcher.dart`                                                     | Dart     |
+| Platform iface  | `lib/src/basic_icon_switcher_platform_interface.dart`                              | Dart     |
+| Method channel  | `lib/src/basic_icon_switcher_method_channel.dart`                                  | Dart     |
+| Web impl        | `lib/src/basic_icon_switcher_web.dart`                                             | Dart     |
+| Web entry point | `lib/basic_icon_switcher_web.dart`                                                 | Dart     |
 | Android         | `android/src/main/java/de/timthetimber/iconswitcher/IconSwitcherPlugin.java` | Java     |
 | iOS             | `ios/Classes/SwiftIconSwitcherPlugin.swift`                                  | Swift    |
 | macOS           | `macos/Classes/IconSwitcherPlugin.swift`                                     | Swift    |
-| Windows         | `windows/icon_switcher_plugin.cpp`                                           | C++      |
-| Linux           | `linux/icon_switcher_plugin.cc`                                              | C++      |
+| Windows         | `windows/basic_icon_switcher_plugin.cpp`                                           | C++      |
+| Linux           | `linux/basic_icon_switcher_plugin.cc`                                              | C++      |
 | Example         | `example/lib/main.dart`                                                      | Dart     |
 
 **Key class**: `IconSwitcher` — all-static API with methods `changeIcon()`, `resetIcon()`, `getCurrentIcon()`, and `isSupported`.
@@ -50,11 +50,11 @@ cd example && flutter run
 
 - **Dart SDK**: `>=3.4.0 <4.0.0`, Flutter `>=3.22.0`
 - **Linting**: `flutter_lints` (see `analysis_options.yaml`)
-- **Method channel name**: `icon_switcher`
+- **Method channel name**: `basic_icon_switcher`
 - **Method channel calls**: Arguments passed as `Map<String, dynamic>`, return `bool` for success/failure
 - **Platform detection**: Always use `kIsWeb` first, then `defaultTargetPlatform`. Never use `Platform.isX` without `kIsWeb` guard.
 - **Desktop icons**: Sent as `Uint8List` icon data over method channel (loaded from Flutter assets via `rootBundle.load`)
-- **Tests**: Mock `MethodChannel('icon_switcher')` via `TestDefaultBinaryMessengerBinding` — see `test/icon_switcher_test.dart`
+- **Tests**: Mock `MethodChannel('basic_icon_switcher')` via `TestDefaultBinaryMessengerBinding` — see `test/basic_icon_switcher_test.dart`
 - **Android native**: Java (not Kotlin)
 - **iOS/macOS native**: Swift
 - **Windows native**: C++ with GDI+

@@ -1,4 +1,4 @@
-#include "include/icon_switcher/icon_switcher_plugin.h"
+#include "include/basic_icon_switcher/basic_icon_switcher_plugin.h"
 
 #include <flutter_linux/flutter_linux.h>
 #include <gtk/gtk.h>
@@ -10,7 +10,7 @@ struct _IconSwitcherPlugin {
   FlPluginRegistrar* registrar;
 };
 
-G_DEFINE_TYPE(IconSwitcherPlugin, icon_switcher_plugin, g_object_get_type())
+G_DEFINE_TYPE(IconSwitcherPlugin, basic_icon_switcher_plugin, g_object_get_type())
 
 static GdkPixbuf* create_pixbuf_from_data(const uint8_t* data, size_t length) {
   GInputStream* stream = g_memory_input_stream_new_from_data(
@@ -103,29 +103,29 @@ static void handle_method_call(IconSwitcherPlugin* self,
 
 static void method_call_cb(FlMethodChannel* channel, FlMethodCall* method_call,
                            gpointer user_data) {
-  IconSwitcherPlugin* plugin = ICON_SWITCHER_PLUGIN(user_data);
+  IconSwitcherPlugin* plugin = BASIC_ICON_SWITCHER_PLUGIN(user_data);
   handle_method_call(plugin, method_call);
 }
 
-static void icon_switcher_plugin_dispose(GObject* object) {
-  G_OBJECT_CLASS(icon_switcher_plugin_parent_class)->dispose(object);
+static void basic_icon_switcher_plugin_dispose(GObject* object) {
+  G_OBJECT_CLASS(basic_icon_switcher_plugin_parent_class)->dispose(object);
 }
 
-static void icon_switcher_plugin_class_init(IconSwitcherPluginClass* klass) {
-  G_OBJECT_CLASS(klass)->dispose = icon_switcher_plugin_dispose;
+static void basic_icon_switcher_plugin_class_init(IconSwitcherPluginClass* klass) {
+  G_OBJECT_CLASS(klass)->dispose = basic_icon_switcher_plugin_dispose;
 }
 
-static void icon_switcher_plugin_init(IconSwitcherPlugin* self) {}
+static void basic_icon_switcher_plugin_init(IconSwitcherPlugin* self) {}
 
-void icon_switcher_plugin_register_with_registrar(
+void basic_icon_switcher_plugin_register_with_registrar(
     FlPluginRegistrar* registrar) {
-  IconSwitcherPlugin* plugin = ICON_SWITCHER_PLUGIN(
-      g_object_new(icon_switcher_plugin_get_type(), nullptr));
+  IconSwitcherPlugin* plugin = BASIC_ICON_SWITCHER_PLUGIN(
+      g_object_new(basic_icon_switcher_plugin_get_type(), nullptr));
   plugin->registrar = FL_PLUGIN_REGISTRAR(g_object_ref(registrar));
 
   g_autoptr(FlStandardMethodCodec) codec = fl_standard_method_codec_new();
   g_autoptr(FlMethodChannel) channel = fl_method_channel_new(
-      fl_plugin_registrar_get_messenger(registrar), "icon_switcher",
+      fl_plugin_registrar_get_messenger(registrar), "basic_icon_switcher",
       FL_METHOD_CODEC(codec));
   fl_method_channel_set_method_call_handler(
       channel, method_call_cb, g_object_ref(plugin), g_object_unref);

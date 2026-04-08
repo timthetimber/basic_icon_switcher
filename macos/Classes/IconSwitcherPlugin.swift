@@ -4,7 +4,7 @@ import AppKit
 public class IconSwitcherPlugin: NSObject, FlutterPlugin {
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "icon_switcher", binaryMessenger: registrar.messenger)
+        let channel = FlutterMethodChannel(name: "basic_icon_switcher", binaryMessenger: registrar.messenger)
         let instance = IconSwitcherPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }

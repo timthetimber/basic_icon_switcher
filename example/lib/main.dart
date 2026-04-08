@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:icon_switcher/icon_switcher.dart';
+import 'package:basic_icon_switcher/basic_icon_switcher.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

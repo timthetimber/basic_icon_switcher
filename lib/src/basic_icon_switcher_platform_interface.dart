@@ -1,6 +1,6 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'icon_switcher_method_channel.dart';
+import 'basic_icon_switcher_method_channel.dart';
 
 abstract class IconSwitcherPlatform extends PlatformInterface {
   IconSwitcherPlatform() : super(token: _token);

@@ -26,7 +26,7 @@ public class IconSwitcherPlugin implements FlutterPlugin, MethodCallHandler {
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         this.context = flutterPluginBinding.getApplicationContext();
-        this.channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "icon_switcher");
+        this.channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "basic_icon_switcher");
         this.channel.setMethodCallHandler(this);
         this.packageManager = context.getPackageManager();
     }

@@ -1,5 +1,5 @@
 name: example
-description: Example app for the icon_switcher plugin.
+description: Example app for the basic_icon_switcher plugin.
 publish_to: "none"
 version: 1.0.0+1
 
@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  icon_switcher:
+  basic_icon_switcher:
     path: ../
 
   cupertino_icons: ^1.0.2

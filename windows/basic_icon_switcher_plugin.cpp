@@ -1,4 +1,4 @@
-#include "icon_switcher_plugin.h"
+#include "basic_icon_switcher_plugin.h"
 
 #include <flutter/method_channel.h>
 #include <flutter/plugin_registrar_windows.h>
@@ -12,7 +12,7 @@
 
 #pragma comment(lib, "gdiplus.lib")
 
-namespace icon_switcher {
+namespace basic_icon_switcher {
 
 namespace {
 
@@ -57,7 +57,7 @@ void IconSwitcherPlugin::RegisterWithRegistrar(
     flutter::PluginRegistrarWindows *registrar) {
   auto channel =
       std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
-          registrar->messenger(), "icon_switcher",
+          registrar->messenger(), "basic_icon_switcher",
           &flutter::StandardMethodCodec::GetInstance());
 
   auto plugin = std::make_unique<IconSwitcherPlugin>(registrar);
@@ -135,4 +135,4 @@ void IconSwitcherPlugin::HandleMethodCall(
   }
 }
 
-}  // namespace icon_switcher
+}  // namespace basic_icon_switcher

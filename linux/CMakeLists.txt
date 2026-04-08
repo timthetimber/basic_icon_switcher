@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
-set(PROJECT_NAME "icon_switcher")
+set(PROJECT_NAME "basic_icon_switcher")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
-set(PLUGIN_NAME "icon_switcher_plugin")
+set(PLUGIN_NAME "basic_icon_switcher_plugin")
 
 list(APPEND PLUGIN_SOURCES
-  "icon_switcher_plugin.cc"
+  "basic_icon_switcher_plugin.cc"
 )
 
 add_library(${PLUGIN_NAME} SHARED

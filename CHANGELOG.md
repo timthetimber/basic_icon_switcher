@@ -1,6 +1,6 @@
 ## 1.0.0
 
-**This is a new package replacing `mobile_icon_switcher`.** Published as `icon_switcher`.
+**This is a new package replacing `mobile_icon_switcher`.** Published as `basic_icon_switcher`.
 
 ### New Features
 
@@ -26,12 +26,12 @@
 
 ### Breaking Changes
 
-- Package renamed from `mobile_icon_switcher` to `icon_switcher`
+- Package renamed from `mobile_icon_switcher` to `basic_icon_switcher`
 - Class renamed from `MobileIconSwitcher` to `IconSwitcher`
 - `changeIcon()` now uses named parameters
 - `setDefaultComponent()` removed (auto-detected)
 - `platformVersion` removed
-- Method channel renamed from `app_icon_switcher` to `icon_switcher`
+- Method channel renamed from `app_icon_switcher` to `basic_icon_switcher`
 
 ---
 

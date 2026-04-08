@@ -1,7 +1,7 @@
 # Icon Switcher
 
-[![pub package](https://img.shields.io/pub/v/icon_switcher.svg)](https://pub.dev/packages/icon_switcher)
-[![GitHub](https://img.shields.io/github/license/timthetimber/icon_switcher)](https://github.com/timthetimber/icon_switcher/blob/main/LICENSE)
+[![pub package](https://img.shields.io/pub/v/basic_icon_switcher.svg)](https://pub.dev/packages/basic_icon_switcher)
+[![GitHub](https://img.shields.io/github/license/timthetimber/basic_icon_switcher)](https://github.com/timthetimber/basic_icon_switcher/blob/main/LICENSE)
 
 A Flutter plugin to dynamically change your app icon at runtime. Supports **iOS**, **Android**, **Web**, **macOS**, **Windows**, and **Linux**.
 
@@ -22,13 +22,13 @@ A Flutter plugin to dynamically change your app icon at runtime. Supports **iOS*
 
 ```yaml
 dependencies:
-  icon_switcher: ^1.0.0
+  basic_icon_switcher: ^1.0.0
 ```
 
 ## Quick Start
 
 ```dart
-import 'package:icon_switcher/icon_switcher.dart';
+import 'package:basic_icon_switcher/basic_icon_switcher.dart';
 
 // Switch to an alternate icon
 await IconSwitcher.changeIcon(
@@ -306,7 +306,7 @@ Returns `true` if icon switching is supported on the current platform.
 
 ### Breaking Changes
 
-1. **Package name**: `mobile_icon_switcher` → `icon_switcher`
+1. **Package name**: `mobile_icon_switcher` → `basic_icon_switcher`
 2. **Class name**: `MobileIconSwitcher` → `IconSwitcher`
 3. **`setDefaultComponent()` removed**: No longer needed — the Android plugin auto-detects the default component.
 4. **`changeIcon()` signature changed**: Now uses named parameters.
@@ -327,10 +327,10 @@ await MobileIconSwitcher.changeIcon('dark', 'com.example.app.Dark');
 await MobileIconSwitcher.resetIcon();
 ```
 
-### After (icon_switcher)
+### After (basic_icon_switcher)
 
 ```dart
-import 'package:icon_switcher/icon_switcher.dart';
+import 'package:basic_icon_switcher/basic_icon_switcher.dart';
 
 // Change icon (no setDefaultComponent needed!)
 await IconSwitcher.changeIcon(

@@ -1,11 +1,11 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:icon_switcher/icon_switcher.dart';
-import 'package:icon_switcher/src/icon_switcher_method_channel.dart';
-import 'package:icon_switcher/src/icon_switcher_platform_interface.dart';
+import 'package:basic_icon_switcher/basic_icon_switcher.dart';
+import 'package:basic_icon_switcher/src/basic_icon_switcher_method_channel.dart';
+import 'package:basic_icon_switcher/src/basic_icon_switcher_platform_interface.dart';
 
 void main() {
-  const testChannel = MethodChannel('icon_switcher');
+  const testChannel = MethodChannel('basic_icon_switcher');
 
   TestWidgetsFlutterBinding.ensureInitialized();
 

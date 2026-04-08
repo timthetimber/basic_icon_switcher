@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 
-import 'icon_switcher_platform_interface.dart';
+import 'basic_icon_switcher_platform_interface.dart';
 
 class MethodChannelIconSwitcher extends IconSwitcherPlatform {
-  final MethodChannel _channel = const MethodChannel('icon_switcher');
+  final MethodChannel _channel = const MethodChannel('basic_icon_switcher');
 
   @override
   Future<bool> changeIcon({

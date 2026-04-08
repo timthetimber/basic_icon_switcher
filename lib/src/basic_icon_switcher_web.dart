@@ -2,7 +2,7 @@ import 'dart:js_interop';
 
 import 'package:web/web.dart' as web;
 
-import 'icon_switcher_platform_interface.dart';
+import 'basic_icon_switcher_platform_interface.dart';
 
 IconSwitcherPlatform createWebPlatform() => _IconSwitcherWebPlatform();
 

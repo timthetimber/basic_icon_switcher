@@ -1,12 +1,12 @@
-#ifndef FLUTTER_PLUGIN_ICON_SWITCHER_PLUGIN_H_
-#define FLUTTER_PLUGIN_ICON_SWITCHER_PLUGIN_H_
+#ifndef FLUTTER_PLUGIN_BASIC_ICON_SWITCHER_PLUGIN_H_
+#define FLUTTER_PLUGIN_BASIC_ICON_SWITCHER_PLUGIN_H_
 
 #include <flutter/method_channel.h>
 #include <flutter/plugin_registrar_windows.h>
 
 #include <memory>
 
-namespace icon_switcher {
+namespace basic_icon_switcher {
 
 class IconSwitcherPlugin : public flutter::Plugin {
  public:
@@ -26,6 +26,6 @@ class IconSwitcherPlugin : public flutter::Plugin {
   flutter::PluginRegistrarWindows *registrar_;
 };
 
-}  // namespace icon_switcher
+}  // namespace basic_icon_switcher
 
-#endif  // FLUTTER_PLUGIN_ICON_SWITCHER_PLUGIN_H_
+#endif  // FLUTTER_PLUGIN_BASIC_ICON_SWITCHER_PLUGIN_H_

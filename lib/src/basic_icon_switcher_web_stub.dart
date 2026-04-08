@@ -1,4 +1,4 @@
-import 'icon_switcher_platform_interface.dart';
+import 'basic_icon_switcher_platform_interface.dart';
 
 IconSwitcherPlatform createWebPlatform() =>
     throw UnsupportedError('Web platform is not supported on this target.');

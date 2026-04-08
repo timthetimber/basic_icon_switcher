@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'src/icon_switcher_platform_interface.dart';
-import 'src/icon_switcher_web_stub.dart'
-    if (dart.library.js_interop) 'src/icon_switcher_web.dart' as web_impl;
+import 'src/basic_icon_switcher_platform_interface.dart';
+import 'src/basic_icon_switcher_web_stub.dart'
+    if (dart.library.js_interop) 'src/basic_icon_switcher_web.dart' as web_impl;
 
-export 'src/icon_switcher_platform_interface.dart';
+export 'src/basic_icon_switcher_platform_interface.dart';
 
 class IconSwitcher {
   /// Changes the app icon on the current platform.

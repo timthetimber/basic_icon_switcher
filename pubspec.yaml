@@ -1,8 +1,8 @@
-name: icon_switcher
+name: basic_icon_switcher
 description: A Flutter plugin to dynamically change your app icon at runtime. Supports iOS, Android, Web (favicon), macOS, Windows, and Linux.
 version: 1.0.0
-repository: https://github.com/timthetimber/icon_switcher
-issue_tracker: https://github.com/timthetimber/icon_switcher/issues
+repository: https://github.com/timthetimber/basic_icon_switcher
+issue_tracker: https://github.com/timthetimber/basic_icon_switcher/issues
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
@@ -39,7 +39,7 @@ flutter:
         pluginClass: IconSwitcherPlugin
       web:
         pluginClass: IconSwitcherWeb
-        fileName: icon_switcher_web.dart
+        fileName: basic_icon_switcher_web.dart
       macos:
         pluginClass: IconSwitcherPlugin
       windows:

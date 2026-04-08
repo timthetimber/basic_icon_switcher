@@ -1,21 +1,21 @@
 PODS:
   - Flutter (1.0.0)
-  - icon_switcher (1.0.0):
+  - basic_icon_switcher (1.0.0):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - icon_switcher (from `.symlinks/plugins/icon_switcher/ios`)
+  - basic_icon_switcher (from `.symlinks/plugins/basic_icon_switcher/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  icon_switcher:
-    :path: ".symlinks/plugins/icon_switcher/ios"
+  basic_icon_switcher:
+    :path: ".symlinks/plugins/basic_icon_switcher/ios"
 
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  icon_switcher: a65079d35c2971ca9921986178242a87393938ee
+  basic_icon_switcher: a65079d35c2971ca9921986178242a87393938ee
 
 PODFILE CHECKSUM: a57f30d18f102dd3ce366b1d62a55ecbef2158e5
 
